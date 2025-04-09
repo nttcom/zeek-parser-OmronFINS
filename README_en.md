@@ -1,0 +1,107 @@
+# Zeek-Parser-OmronFINS
+
+## Overview
+
+Zeek-Parser-OmronFINS is a Zeek plug-in that can analyze communication using Omron FINS/UDP.
+
+## Installation
+
+### Manual Installation
+
+Before using this plug-in, please make sure Zeek, Spicy has been installed.
+
+````
+# Check Zeek
+~$ zeek -version
+zeek version 7.0.0
+
+# Check Spicy
+~$ spicyz -version
+7.0.0
+~$ spicyc -version
+spicyc v1.11.0 (7ddf6ce4)
+
+# The path of zeek in this manual is based on the following output
+~$ which zeek
+/usr/local/zeek/bin/zeek
+````
+
+Use `git clone` to get a copy of this repository to your local environment.
+```
+~$ git clone https://github.com/nttcom-ic/zeek-parser-OmronFINS.git
+```
+
+## Usage
+
+### For manual installation
+
+Compile source code and copy the object files to the following path.
+```
+~$ cd ~/zeek-parser-OmronFINS/analyzer
+~$ spicyz -o omron_fins.hlto omron_fins.spicy omron_fins.evt
+# omron_fins.hlto is generated
+~$ cp omron_fins.hlto /usr/local/zeek/lib/zeek/spicy/
+```
+
+Then, copy the zeek file to the following paths.
+```
+~$ cd ~/zeek-parser-OmronFINS/scripts/
+~$ cp main.zeek /usr/local/zeek/share/zeek/site/omron_fins.zeek
+~$ cp consts.zeek /usr/local/zeek/share/zeek/site/
+```
+
+Finally, import the Zeek plugin.
+```
+~$ tail /usr/local/zeek/share/zeek/site/local.zeek
+... Omit ...
+@load omron_fins
+```
+
+This plug-in generates a `omron_fins.log` by the command below:
+```
+~$ cd ~/zeek-parser-OmronFINS/testing/Traces
+~$ zeek -Cr test.pcap /usr/local/zeek/share/zeek/site/omron_fins.zeek
+```
+
+## Log type and description
+
+This plug-in monitors all functions of FINS/UDP and outputs them as `omron_fins.log`.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| ts | time | timestamp of the first communication |
+| uid | string | unique ID for this connection |
+| id.orig_h | addr | source IP address |
+| id.orig_p | port | source port number |
+| id.resp_h | addr | destination IP address  |
+| id.resp_p | port | destination port number   |
+| proto | enum | transport layer protocol name |
+| data_type | string | command or response |
+| destination_network_address | string | destination network address |
+| destination_node_number | string | destination node number |
+| destination_unit_address | string | destination unit address |
+| source_network_address | string | source network address |
+| source_node_number | string | source node number |
+| source_unit_address | string | source unit address |
+| command_type | string | name of the command |
+| number | int | number of packet occurrence |
+| ts_end | time | timestamp of the last communication |
+
+An example of `omron_fins.log` is as follows:
+```
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	omron_fins
+#open	2025-03-28-16-30-42
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	data_type	destination_network_address	destination_node_number	destination_unit_address	source_network_address	source_node_number	source_unit_address	command_type	number	ts_end
+#types	time	string	addr	port	addr	port	string	string	string	string	string	string	string	string	string	int	time
+1736159106.716243	CMR1Cj2J87pBDJu7Va	2.2.2.2	55007	1.1.1.1	9600	udp	command	0x00	0x64	CPU Unit	0x00	0x01	CPU Unit	multiple_memory_area_read	10	1736159106.717982
+1736159106.716463	CMR1Cj2J87pBDJu7Va	2.2.2.2	55007	1.1.1.1	9600	udp	response	0x00	0x01	CPU Unit	0x00	0x64	CPU Unit multiple_memory_area_read	10	1736159106.718071
+#close	2025-03-28-16-30-42
+```
+
+## Related Software
+
+This plug-in is used by [OsecT](https://github.com/nttcom/OsecT).

@@ -1,0 +1,7 @@
+# @TEST-DOC: Test parsing behavior of omron_fins.
+#
+# @TEST-EXEC: spicyc ${DIST}/analyzer/omron_fins.spicy -j -d -o omron_fins.hlto
+#
+# TODO: Add/adapt standalone parsing tests here.
+# @TEST-EXEC: printf "test string" | spicy-dump -p omron_fins::Packet omron_fins.hlto >output 2>&1
+# @TEST-EXEC: TEST_DIFF_CANONIFIER= btest-diff output

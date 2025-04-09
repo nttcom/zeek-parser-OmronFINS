@@ -1,0 +1,25 @@
+module OMRON_FINS;
+
+import spicy;
+
+public type FinsUDP = unit {
+    finsFrame: Finsframe;
+    on %done { spicy::accept_input(); }
+};
+
+type Finsframe = unit {
+    : bitfield(8) {
+        dataType: 1;
+    } &bit-order=spicy::BitOrder::MSB0;
+    reserved: skip uint8;
+    gatewayCount: uint8;
+    dna: uint8;
+    da1: uint8;
+    da2: uint8;
+    sna: uint8;
+    sa1: uint8;
+    sa2: uint8;
+    serviceID: skip uint8;
+    commandCode: uint16;
+    extraData: skip bytes &eod;
+};

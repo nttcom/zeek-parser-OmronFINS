@@ -1,0 +1,8 @@
+protocol analyzer OMRON_FINS_UDP over UDP:
+parse with OMRON_FINS::FinsUDP;
+
+import OMRON_FINS;
+
+# -----------------------------------
+on OMRON_FINS::FinsUDP::finsFrame -> event omron_fins::finsUDP($conn, self.finsFrame);
+# -----------------------------------
