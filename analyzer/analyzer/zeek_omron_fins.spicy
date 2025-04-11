@@ -1,9 +1,0 @@
-# Set up protocol confirmation/rejection for analyzers, as well as any further
-# Zeek-specific analysis.
-
-module Zeek_omron_fins;
-
-import OMRON_FINS;
-import zeek;
-
-# TODO: Add anything you need here.
