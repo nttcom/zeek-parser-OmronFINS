@@ -1,6 +1,6 @@
 # Zeek-Parser-OmronFINS
 
-English is [here](https://github.com/nttcom-ic/zeek-parser-OmronFINS/blob/main/README_en.md)
+English is [here](https://github.com/nttcom/zeek-parser-OmronFINS/blob/main/README_en.md)
 
 ## 概要
 
