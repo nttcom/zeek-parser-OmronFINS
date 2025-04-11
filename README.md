@@ -8,6 +8,16 @@ Zeek-Parser-OmronFINSとはOmron FINS/UDPを解析できるZeekプラグイン�
 
 ## インストール
 
+### パッケージマネージャーによるインストール
+
+このプラグインは[Zeek Package Manger](https://docs.zeek.org/projects/package-manager/en/stable/)用のパッケージとして提供されています。
+
+以下のコマンドを実行することで、本プラグインは利用可能になります。
+```
+zkg refresh
+zkg install zeek-parser-OmronFINS
+```
+
 ### マニュアルインストール
 
 本プラグインを利用する前に、Zeek, Spicyがインストールされていることを確認します。
@@ -35,6 +45,14 @@ spicyc v1.11.0 (7ddf6ce4)
 ```
 
 ## 使い方
+
+### パッケージマネージャーによるインストールの場合
+
+以下のように本プラグインを使うことで `omron_fins.log` が生成されます。
+
+```
+zeek -Cr /usr/local/zeek/var/lib/zkg/clones/package/zeek-parser-OmronFINS/testing/Traces/test.pcap zeek-parser-OmronFINS
+```
 
 ### マニュアルインストールの場合
 
